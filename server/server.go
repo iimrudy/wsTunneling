@@ -51,20 +51,18 @@ func hello(c echo.Context) error {
 		}()
 
 		for {
-			for {
-				bytes := make([]byte, 1024)
-				size, err := sshConn.Read(bytes)
-				if err != nil {
-					fmt.Println(err)
-					ws.Close()
-					return
-				}
-				_, err = ws.Write(bytes[:size])
-				if err != nil {
-					fmt.Println(err)
-					ws.Close()
-					return
-				}
+			bytes := make([]byte, 1024)
+			size, err := sshConn.Read(bytes)
+			if err != nil {
+				fmt.Println(err)
+				ws.Close()
+				return
+			}
+			_, err = ws.Write(bytes[:size])
+			if err != nil {
+				fmt.Println(err)
+				ws.Close()
+				return
 			}
 		}
 	}).ServeHTTP(c.Response(), c.Request())
